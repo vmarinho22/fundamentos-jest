@@ -8,8 +8,10 @@ export default class Cart {
   }
 
   removeItem(item: Product): void {
-    const index = this._items.indexOf(item);
-    this._items.splice(index, 1);
+    if (this._items.length > 0) {
+      const index = this._items.indexOf(item);
+      this._items.splice(index, 1);
+    }
   }
 
   get items(): readonly Product[] {
