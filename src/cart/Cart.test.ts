@@ -8,7 +8,6 @@ const makeCart = () : Cart => {
 const makeProduct = (name: string): Product =>  ({
   name: name,
   price: 10.0,
-  quantity: 2
 })
 
 const makeSut = () => { // System Under Test
@@ -35,6 +34,8 @@ describe("Test Class Cart", () => {
     sut.addItem(makeProduct('Product 1'))
 
     expect(sut.items.length).toBe(1);
+    expect(sut.items[0].product.name).toBe("Product 1")
+    expect(sut.items[0].quantity).toBe(1)
 
   });
 
@@ -44,9 +45,28 @@ describe("Test Class Cart", () => {
     expect(sut.items.length).toBe(0);
 
     sut.addItem(makeProduct('Product 1'))
+    sut.addItem(makeProduct('Product 1'))
     sut.addItem(makeProduct('Product 2'))
 
     expect(sut.items.length).toBe(2);
+    expect(sut.items[0].product.name).toBe("Product 1")
+    expect(sut.items[0].quantity).toBe(2)
+    expect(sut.items[1].product.name).toBe("Product 2")
+    expect(sut.items[1].quantity).toBe(1)
+
+  });
+
+  it("should has two item in cart, and add same product one", () => {
+    const { sut } = makeSut();
+    
+    expect(sut.items.length).toBe(0);
+
+    sut.addItem(makeProduct('Product 1'))
+    sut.addItem(makeProduct('Product 1'))
+
+    expect(sut.items.length).toBe(1);
+    expect(sut.items[0].product.name).toBe("Product 1")
+    expect(sut.items[0].quantity).toBe(2)
 
   });
 
@@ -86,7 +106,7 @@ describe("Test Class Cart", () => {
     sut.addItem(makeProduct('Product 1'))
     sut.addItem(makeProduct('Product 2'))
 
-    expect(sut.total()).toBe(40)
+    expect(sut.total()).toBe(20)
   })
 
   it('should be get total of cart with empty cart', () => {
