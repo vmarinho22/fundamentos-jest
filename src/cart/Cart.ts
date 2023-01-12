@@ -1,6 +1,7 @@
+import { CartProtocol } from './interfaces/cart.protocol';
 import Product from "../product/Product";
 
-export default class Cart {
+export default class Cart implements CartProtocol {
   private readonly _items: Product[] = [];
 
   addItem(item: Product): void {
